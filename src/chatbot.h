@@ -28,10 +28,10 @@ public:
     ~ChatBot();
 
     ChatBot(const ChatBot&);
-    // ChatBot(ChatBot&&);
+    ChatBot(ChatBot&&);
 
-    // ChatBot& operator=(const ChatBot&);
-    // ChatBot& operator=(ChatBot&&);
+    ChatBot& operator=(const ChatBot&);
+    ChatBot& operator=(ChatBot&&);
 
     // getters / setters
     void SetCurrentNode(GraphNode *node);
