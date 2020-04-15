@@ -44,21 +44,21 @@ ChatBot::~ChatBot()
 
 ChatBot::ChatBot(const ChatBot& other)
 {
-    std::cout << "ChatBot copy constructor" << std::endl;
+    std::cout << "ChatBot Copy Constructor" << std::endl;
 
     _chatLogic = other._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
     _rootNode = other._rootNode;
     _currentNode = other._currentNode;
-
-    _image = new wxBitmap();
-    *_image = *(other._image);
+    _image = new wxBitmap(*other._image);
 }
 
 ChatBot::ChatBot(ChatBot&& other)
 {
-    std::cout << "ChatBot move constructor" << std::endl;
+    std::cout << "ChatBot Move Constructor" << std::endl;
 
     _chatLogic = other._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
     other._chatLogic = nullptr;
 
     _rootNode = other._rootNode;
@@ -67,32 +67,33 @@ ChatBot::ChatBot(ChatBot&& other)
     _currentNode = other._currentNode;
     other._currentNode = nullptr;
     
-    _image = std::move(other._image);
+    _image = other._image;
+    other._image = NULL;
 }
 
 ChatBot& ChatBot::operator=(const ChatBot& other)
 {
-    std::cout << "ChatBot copy assignment" << std::endl;
+    std::cout << "ChatBot Copy Assignment" << std::endl;
 
     if(this != &other)
     {
         _chatLogic = other._chatLogic;
+        _chatLogic->SetChatbotHandle(this);
         _rootNode = other._rootNode;
         _currentNode = other._currentNode;
-
-        _image = new wxBitmap();
-        *_image = *(other._image);
+        _image = new wxBitmap(*other._image);
     }
     return *this;
 }
 
 ChatBot& ChatBot::operator=(ChatBot&& other)
 {
-    std::cout << "ChatBot move assignment" << std::endl;
+    std::cout << "ChatBot Move Assignment" << std::endl;
 
     if(this != &other)
     {
         _chatLogic = other._chatLogic;
+        _chatLogic->SetChatbotHandle(this);
         other._chatLogic = nullptr;
 
         _rootNode = other._rootNode;
@@ -101,7 +102,9 @@ ChatBot& ChatBot::operator=(ChatBot&& other)
         _currentNode = other._currentNode;
         other._currentNode = nullptr;
         
-        _image = std::move(other._image);
+        _image = other._image;
+        other._image = NULL;
+
     }
     return *this;
 }
